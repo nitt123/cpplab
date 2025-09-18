@@ -8,39 +8,41 @@ private:
     double supply_voltage;
     int number_of_inputs;
 public:
-    Operational_Amplifier(double r, double p, double a) {
+    Operational_Amplifier(double r, double p, int a) {
         Gain = r;
         supply_voltage = p;
         number_of_inputs = a;
-        cout << "Parameterized constructor called\n";
+        cout << "Parameterized constructor\n";
     }
     Operational_Amplifier() {
         Gain = 0;
         supply_voltage = 0;
         number_of_inputs = 0;
-        cout << "Default constructor called\n";
+        cout << "Звичайний конструктор\n";
     }
     ~Operational_Amplifier() {
-    cout << "Destructor called for Operational_Amplifier " << Gain << " Ohm\n";
+    cout << "дуструктор" << Gain << "\n";
     }
     void printinfo(){
-        cout<<"Gain: "<<Gain<<"Ohm\n";
-        cout<<"supply voltage: "<<supply_voltage<<"w\n";
-        cout<<"number of inputs: "<<number_of_inputs<<"%\n";
+        cout<<"Коефіцієнт підсилення: "<<Gain<<"\n";
+        cout<<"Напруга живлення: "<<supply_voltage<<"v\n";
+        cout<<"Кількість входів: "<<number_of_inputs<<"\n";
 
     }
     void inputinfo() {
-        cout << "Enter Gain (Ohm): ";
+        cout << "Введи коефіцієнт підсилення: ";
         cin >> Gain;
-        cout << "Enter maximum power dissipation (W): ";
+
+        cout << "Введи напругу живлення(v): ";
         cin >> supply_voltage;
-        cout << "Enter number of inputs class (%): ";
+        cout << "Введи кількість входів: ";
         cin >> number_of_inputs;
     }
 };
 
 
 int main() {
+    setlocale (LC_CTYPE, "ukr");
     Operational_Amplifier r1;
     r1.inputinfo();     
     r1.printinfo();     
