@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "numeric": "cpp"
-    }
+        "numeric": "cpp",
+        "new": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
