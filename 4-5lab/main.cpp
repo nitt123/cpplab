@@ -1,4 +1,6 @@
 #include <iostream>
+#include <windows.h>
+#include <locale>
 using namespace std;
 
 class Operational_Amplifier
@@ -100,8 +102,7 @@ public:
 };
 
 int main() {
-    setlocale(LC_ALL, "ukr");
-
+    SetConsoleOutputCP(CP_UTF8);
     Operational_Amplifier r1;
     r1.inputinfo();     
 

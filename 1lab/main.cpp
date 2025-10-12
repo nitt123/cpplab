@@ -1,7 +1,11 @@
 #include <iostream>
+#include "windows.h"
+#include <locale>
 using namespace std;
 
-int main() {
-  cout << "Hello World!";
-  return 0;
+int main()
+{
+  SetConsoleOutputCP(CP_UTF8);
+  cout << "Hello world" << endl;
+
 }
