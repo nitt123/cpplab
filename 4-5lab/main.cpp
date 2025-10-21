@@ -15,7 +15,7 @@ public:
         if (g < 0) {
             cout << "Помилка: коефіцієнт підсилення не може бути від'ємним!\n";
         } else {
-            delete Gain; 
+            delete Gain;
             Gain = new double(g);
         }
     }
@@ -92,7 +92,7 @@ public:
             if (*number_of_inputs < minInputs) cout << "- Кількість входів менша за " << minInputs << "\n";
         }
     }
-    void copy(const Operational_Amplifier& other){
+    void copy(const animal& other){
         setGain(*other.Gain);
         setSupplyVoltage(*other.supply_voltage);
         setNumberOfInputs(*other.number_of_inputs);
@@ -103,18 +103,18 @@ public:
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
-    Operational_Amplifier r1;
-    r1.inputinfo();     
+    animal r1;
+    r1.inputinfo();
 
     cout << "\n=== Перевірка r1 за критеріями (мін. Gain=1, V=5В, inputs=2) ===\n";
     r1.checkCriteria(5, 7, 9);
 
     cout << "\n";
 
-    Operational_Amplifier r2(10, 12, 5); 
+    animal r2(10, 12, 5);
     cout << "\n=== Перевірка r2 за критеріями (мін. Gain=1, V=5В, inputs=2) ===\n";
     r2.checkCriteria(1, 5, 2);
-    Operational_Amplifier r3;
+    animal r3;
     r3.copy(r2);
 
     return 0;
