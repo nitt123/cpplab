@@ -1,30 +1,42 @@
 #include <iostream>
 #include "Operational_Amplifier.h"
-#include <windows.h>
-#include <locale>
+#include "windows.h"
 
 int main() {
-    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleOutputCP(1251);
+    SetConsoleCP(1251);
 
-    std::cout << "Створення об'єкта op_amp..." << std::endl;
-    OperationalAmplifier op_amp(120.5, 15.0, 2);
+    OperationalAmplifier op_amp_manager_1;
 
-    std::cout << "\nПочаткові дані:" << std::endl;
-    op_amp.printInfo();
+    op_amp_manager_1.printAll();
 
-    std::cout << "\n--- Тестування зміни даних ---" << std::endl;
+    op_amp_manager_1.addOpAmp(120.5, 15.0, 2);
+    op_amp_manager_1.addOpAmp(100.0, 9.0, 4);
 
-    std::cout << "Спроба встановити кількість входів = -1..." << std::endl;
-    op_amp.setInputs(-1);
+    std::cout << "\n³����� ����: "
+        << op_amp_manager_1.getFreeSlots() << std::endl;
 
-    std::cout << "Встановлення напруги = -15.0 В..." << std::endl;
-    op_amp.setVoltage(-15.0);
+    op_amp_manager_1.printAll();
 
-    std::cout << "Спроба встановити коефіцієнт підсилення = 0..." << std::endl;
-    op_amp.setGain(0);
+    op_amp_manager_1.addOpAmp(0, 12.0, 2);
+    op_amp_manager_1.addOpAmp(150.0, 0, 2);
+    op_amp_manager_1.addOpAmp(200.0, -5.0, -1);
 
-    std::cout << "\nКінцеві дані після спроб модифікації:" << std::endl;
-    op_amp.printInfo();
+    op_amp_manager_1.printAll();
+
+    {
+        OperationalAmplifier op_amp_manager_2;
+        op_amp_manager_2.addOpAmp(75.0, 5.0, 8);
+        op_amp_manager_2.printAll();
+    }
+
+    op_amp_manager_1.printAll();
+
+    op_amp_manager_1.addOpAmp(10.0, 3.3, 1);
+    op_amp_manager_1.addOpAmp(50.0, 12.0, 2);
+    op_amp_manager_1.addOpAmp(1.0, 1.0, 1);
+
+    op_amp_manager_1.printAll();
 
     return 0;
 }

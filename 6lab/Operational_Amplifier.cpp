@@ -1,62 +1,68 @@
 #include "Operational_Amplifier.h"
 #include <iostream>
 
-OperationalAmplifier::OperationalAmplifier(double gain, double voltage, int inputs) {
-    gain_coefficient = 0;
-    supply_voltage = 0;
-    number_of_inputs = 0;
+std::array<op_amp_s_t, STORAGE_SIZE> OperationalAmplifier::op_amps_storage = {};
+int OperationalAmplifier::current_count = 0;
 
-    setGain(gain);
-    setVoltage(voltage);
-    setInputs(inputs);
-
-    std::cout << "=> РћР±'С”РєС‚ OperationalAmplifier СЃС‚РІРѕСЂРµРЅРѕ." << std::endl;
+OperationalAmplifier::OperationalAmplifier() {
+    std::cout << "-> Створено об'єкт OperationalAmplifier." << std::endl;
 }
 
 OperationalAmplifier::~OperationalAmplifier() {
-    std::cout << "=> РћР±'С”РєС‚ OperationalAmplifier Р·РЅРёС‰РµРЅРѕ." << std::endl;
+    std::cout << "-> Знищено об'єкт OperationalAmplifier." << std::endl;
 }
 
-void OperationalAmplifier::setGain(double gain) {
-    if (gain > 0) {
-        gain_coefficient = gain;
-    } else {
-        std::cout << "[РџРћРџР•Р Р•Р”Р–Р•РќРќРЇ] РљРѕРµС„С–С†С–С”РЅС‚ РїС–РґСЃРёР»РµРЅРЅСЏ РјР°С” Р±СѓС‚Рё РґРѕРґР°С‚РЅС–Рј. Р—РЅР°С‡РµРЅРЅСЏ РЅРµ Р·РјС–РЅРµРЅРѕ." << std::endl;
+bool OperationalAmplifier::addOpAmp(double gain, double voltage, int inputs) {
+    if (gain <= 0) {
+        std::cout << "Помилка: Коефіцієнт має бути > 0. Запис відхилено." << std::endl;
+        return false;
     }
-}
-
-void OperationalAmplifier::setVoltage(double voltage) {
-    if (voltage != 0) {
-        supply_voltage = voltage;
-    } else {
-        std::cout << "[РџРћРџР•Р Р•Р”Р–Р•РќРќРЇ] РќР°РїСЂСѓРіР° Р¶РёРІР»РµРЅРЅСЏ РЅРµ РјРѕР¶Рµ РґРѕСЂС–РІРЅСЋРІР°С‚Рё 0. Р—РЅР°С‡РµРЅРЅСЏ РЅРµ Р·РјС–РЅРµРЅРѕ." << std::endl;
+    if (voltage == 0) {
+        std::cout << "Помилка: Напруга не може бути 0. Запис відхилено." << std::endl;
+        return false;
     }
-}
-
-void OperationalAmplifier::setInputs(int inputs) {
-    if (inputs > 0) {
-        number_of_inputs = inputs;
-    } else {
-        std::cout << "[РџРћРџР•Р Р•Р”Р–Р•РќРќРЇ] РљС–Р»СЊРєС–СЃС‚СЊ РІС…РѕРґС–РІ РјР°С” Р±СѓС‚Рё Р±С–Р»СЊС€РѕСЋ Р·Р° 0. Р—РЅР°С‡РµРЅРЅСЏ РЅРµ Р·РјС–РЅРµРЅРѕ." << std::endl;
+    if (inputs <= 0) {
+        std::cout << "Помилка: Кількість входів має бути > 0. Запис відхилено." << std::endl;
+        return false;
     }
+
+    if (current_count >= STORAGE_SIZE) {
+        std::cout << "Помилка: Сховище заповнене. Запис відхилено." << std::endl;
+        return false;
+    }
+
+    op_amps_storage[current_count].id = current_count + 1;
+    op_amps_storage[current_count].gain = gain;
+    op_amps_storage[current_count].voltage = voltage;
+    op_amps_storage[current_count].number_of_inputs = inputs;
+    op_amps_storage[current_count].is_used = true;
+
+    std::cout << "Успіх: Додано ОП з ID " << current_count + 1 << std::endl;
+    current_count++;
+    return true;
 }
 
-double OperationalAmplifier::getGain() const {
-    return gain_coefficient;
+void OperationalAmplifier::printAll() const {
+    std::cout << "\n--- Вміст сховища ОП ---" << std::endl;
+    if (current_count == 0) {
+        std::cout << "Сховище порожнє." << std::endl;
+        std::cout << "--------------------------\n" << std::endl;
+        return;
+    }
+
+    std::cout << "ID\tGain\tVoltage\tInputs" << std::endl;
+    std::cout << "-----------------------------------" << std::endl;
+
+    for (int i = 0; i < current_count; ++i) {
+        std::cout << op_amps_storage[i].id << "\t"
+            << op_amps_storage[i].gain << "\t"
+            << op_amps_storage[i].voltage << "\t"
+            << op_amps_storage[i].number_of_inputs
+            << std::endl;
+    }
+    std::cout << "--- Кінець сховища ---\n" << std::endl;
 }
 
-double OperationalAmplifier::getVoltage() const {
-    return supply_voltage;
-}
-
-int OperationalAmplifier::getInputs() const {
-    return number_of_inputs;
-}
-
-void OperationalAmplifier::printInfo() const {
-    std::cout << "\n--- РҐР°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё РїС–РґСЃРёР»СЋРІР°С‡Р° ---" << std::endl;
-    std::cout << "РљРѕРµС„С–С†С–С”РЅС‚ РїС–РґСЃРёР»РµРЅРЅСЏ: " << gain_coefficient << std::endl;
-    std::cout << "РќР°РїСЂСѓРіР° Р¶РёРІР»РµРЅРЅСЏ: " << supply_voltage << " Р’" << std::endl;
-    std::cout << "РљС–Р»СЊРєС–СЃС‚СЊ РІС…РѕРґС–РІ: " << number_of_inputs << std::endl;
-    std::cout << "------------------------------------" << std::endl;
+int OperationalAmplifier::getFreeSlots() const {
+    return STORAGE_SIZE - current_count;
 }

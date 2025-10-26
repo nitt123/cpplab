@@ -1,25 +1,32 @@
 #ifndef OPERATIONAL_AMPLIFIER_H
 #define OPERATIONAL_AMPLIFIER_H
 
+#include <iostream>
+#include <string>
+#include <array>
+
+const int STORAGE_SIZE = 5; // <--- «м≥нив назву константи
+
+struct op_amp_s_t {
+    int id;
+    double gain;
+    double voltage;
+    int number_of_inputs;
+    bool is_used;
+};
+
 class OperationalAmplifier {
 private:
-    double gain_coefficient;
-    double supply_voltage;
-    int number_of_inputs;
+    static std::array<op_amp_s_t, STORAGE_SIZE> op_amps_storage;
+    static int current_count;
 
 public:
-    OperationalAmplifier(double gain, double voltage, int inputs);
+    OperationalAmplifier();
     ~OperationalAmplifier();
 
-    void setGain(double gain);
-    void setVoltage(double voltage);
-    void setInputs(int inputs);
-
-    double getGain() const;
-    double getVoltage() const;
-    int getInputs() const;
-
-    void printInfo() const;
+    bool addOpAmp(double gain, double voltage, int inputs);
+    void printAll() const;
+    int getFreeSlots() const;
 };
 
 #endif
