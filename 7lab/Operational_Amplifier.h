@@ -3,9 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include <array>
-
-const int STORAGE_SIZE = 5;
+#include <vector> 
 
 struct op_amp_s_t {
     int id;
@@ -17,8 +15,7 @@ struct op_amp_s_t {
 
 class OperationalAmplifier {
 private:
-    static std::array<op_amp_s_t, STORAGE_SIZE> op_amps_storage;
-    static int current_count;
+    static std::vector<op_amp_s_t> op_amps_storage;
     static int next_id_counter;
 
 public:
@@ -27,7 +24,7 @@ public:
 
     bool addOpAmp(double gain, double voltage, int inputs);
     void printAll() const;
-    int getFreeSlots() const;
+    int getCurrentSize() const;
 
     bool insertOpAmp(int index, double gain, double voltage, int inputs);
     bool removeOpAmp(int index);
