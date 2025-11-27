@@ -137,9 +137,6 @@ int main() {
     SetConsoleCP(1251);
 
     std::vector<std::unique_ptr<RadioStation>> stations;
-
-    std::cout << "Зверніть увагу: Перед першим збереженням файлу 'radio_data.txt' необхідно видалити його, якщо він існує, для коректного збереження поточних даних.\n";
-
     int choice;
 
     do {
