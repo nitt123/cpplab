@@ -22,7 +22,8 @@ void RadioStation::readData(std::istream& is) {
     double inputFreq;
 
     std::cout << "Введіть Модель: ";
-    if (!(is >> inputModel)) {
+    is >> std::ws;
+    if (!std::getline(is, inputModel)) {
         throw RadioStationException("Не вдалося прочитати модель.");
     }
 
